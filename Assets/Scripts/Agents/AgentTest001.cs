@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class AgentTest001 : MainAgentScript
 {
-    public override void AgentAction()
+    public override void AgentActionStage()
     {
+        throw new System.NotImplementedException();
     }
 
-    public override void AgentIdle()
+    public override void AgentIdleStage()
     {
+        throw new System.NotImplementedException();
     }
+
+    
 }

@@ -4,11 +4,32 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public abstract class MainAgentScript : MonoBehaviour
+public abstract class MainAgentScript : ObjectSelecting
 {
     public SO_AgentsData agentData;
-    public bool isGettingPick = false;
-    public GameObject cursor;
+    public agentStates currentAgentStates;
+
+    public void Update()
+    {
+        if (selectedObject != null && GameStates.currentGameState == GameStates.GameStateList.BUILDING)
+        {
+            if (selectedObject == gameObject)
+            {
+                //Can pick
+            }
+        }
+    }
+
+    public void FixedUpdate()
+    {
+        
+    }
+
+    public abstract void AgentIdleStage();
+    public abstract void AgentActionStage();
+
+
+    /*
     public abstract void AgentIdle();
     public abstract void AgentAction();
     public void AreaCheck()
@@ -88,5 +109,11 @@ public abstract class MainAgentScript : MonoBehaviour
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireSphere(transform.position, agentData.areaRange);
         }
+    }*/
+
+    public enum agentStates
+    {
+        IDLE, ACTION
     }
+
 }
