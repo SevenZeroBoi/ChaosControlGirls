@@ -6,12 +6,12 @@ public class AgentTest001 : MainAgentScript
 {
     public override void AgentActionStage()
     {
-        throw new System.NotImplementedException();
+        Debug.Log(gameObject.name + " Action!");
     }
 
     public override void AgentIdleStage()
     {
-        throw new System.NotImplementedException();
+        Debug.Log(gameObject.name + " Idle!");
     }
 
     

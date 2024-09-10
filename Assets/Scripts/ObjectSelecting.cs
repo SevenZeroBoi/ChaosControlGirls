@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class ObjectSelecting : MonoBehaviour
 {
@@ -9,6 +10,17 @@ public class ObjectSelecting : MonoBehaviour
     public static GameObject selectedObject;
 
     //public List<string> canSelectedObjectTag = new List<string>();
+    public enum CursorState
+    {
+        OBJ, NONE, DISABLE
+    }
+
+    private void Update()
+    {
+        CursorMovement();
+        CheckingStateChange();
+        CheckRangeBetweenObject();
+    }
 
     private void CursorMovement()
     {
@@ -17,12 +29,54 @@ public class ObjectSelecting : MonoBehaviour
         transform.position = transform.position + new Vector3(moveX, moveY).normalized * Time.deltaTime * moveSpeed;
     }
 
-    public void OnCollisionEnter2D(Collision2D other)
+    public string tagcheck;
+
+    #region Working With GameStates
+    void ChangingTargetWithGameState()
     {
-        collidedObjects.Add(other.gameObject, other.transform.position);
+        switch (GameStates.currentGameState)
+        {
+            case GameStates.GameStateList.BUILDING:
+                tagcheck = "Buildings";
+                break;
+            case GameStates.GameStateList.AGENTSETUP:
+                tagcheck = "Agents";
+                break;
+            case GameStates.GameStateList.MOVING:
+                tagcheck = null;
+                break;
+            default:
+                break;
+        }
     }
 
-    public void OnCollisionExit2D(Collision2D other)
+    GameStates.GameStateList pastState;
+    void CheckingStateChange()
+    {
+        if (GameStates.currentGameState != pastState)
+        {
+            //trigger command
+            pastState = GameStates.currentGameState;
+            ChangingTargetWithGameState();
+        }
+    }
+
+    #endregion
+
+
+    #region Finding Object to tag
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (tagcheck != null)
+        {
+            if (other.gameObject.tag == tagcheck)
+            {
+                Debug.Log("Tagggg mitch!");
+                collidedObjects.Add(other.gameObject, other.transform.position);
+            }
+        }
+    }
+    public void OnTriggerExit2D(Collider2D other)
     {
         collidedObjects.Remove(other.gameObject);
     }
@@ -45,18 +99,26 @@ public class ObjectSelecting : MonoBehaviour
 
         if (selectedObject != null)
         {
-            ObjectGlowing();
+
         }
     }
 
-    public void ObjectGlowing()
+
+    private void OnDrawGizmos()
     {
-        
+        if (collidedObjects != null && selectedObject != null)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(transform.position, selectedObject.transform.position);
+        }
+    }
+    #endregion
+
+
+    private void PickingItem()
+    {
+
     }
 
-    public enum CursorState
-    {
-        OBJ, NONE, DISABLE
-    }
 
 }
