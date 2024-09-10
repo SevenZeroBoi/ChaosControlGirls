@@ -20,6 +20,8 @@ public class ObjectSelecting : MonoBehaviour
         CursorMovement();
         CheckingStateChange();
         CheckRangeBetweenObject();
+        PickingItem();
+        StateActions();
     }
 
     private void CursorMovement()
@@ -56,6 +58,7 @@ public class ObjectSelecting : MonoBehaviour
         if (GameStates.currentGameState != pastState)
         {
             //trigger command
+            collidedObjects.Clear();
             pastState = GameStates.currentGameState;
             ChangingTargetWithGameState();
         }
@@ -84,6 +87,11 @@ public class ObjectSelecting : MonoBehaviour
     public void CheckRangeBetweenObject()
     {
         Dictionary<GameObject, float> checkrangebetween = new Dictionary<GameObject, float>();
+
+        if (collidedObjects.Count >= 0)
+        {
+            selectedObject = null;
+        }
 
         foreach (var obj in collidedObjects)
         {
@@ -114,11 +122,41 @@ public class ObjectSelecting : MonoBehaviour
     }
     #endregion
 
-
-    private void PickingItem()
+    public enum ObjectState
     {
-
+        SELECTED,FOLLOWING
     }
 
+    public ObjectState OBJState;
+    
+    private void PickingItem()
+    {
+        if (selectedObject != null)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log("Press Space!");
+                if (OBJState == ObjectState.SELECTED)
+                {
+                    OBJState = ObjectState.FOLLOWING;
+                }
+                if (OBJState == ObjectState.FOLLOWING)
+                {
+                    OBJState = ObjectState.SELECTED;
+                }
+            }
+            
+
+        }
+    }
+
+
+    private void StateActions()
+    {
+        if (OBJState == ObjectState.FOLLOWING)
+        {
+            selectedObject.transform.position = gameObject.transform.position;
+        }
+    }
 
 }
