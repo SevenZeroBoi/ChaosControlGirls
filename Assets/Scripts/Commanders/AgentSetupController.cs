@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class AgentSetupController : MonoBehaviour
 {
+    private GameObject _movingTargetOBJ;
     private Vector3 _thePastLocation;
-    private BoxCollider2D _areaHitBoxContainer;
-    private bool _canPlaceAgents;
+    private bool _onMoveAgents;
     private void OnEnable()
     {
         _thePastLocation = Vector3.zero;
-        _areaHitBoxContainer = null;
     }
     private void OnDisable()
     {
-        if (_areaHitBoxContainer != null)
-        {
-            _areaHitBoxContainer = null;
-        }
+
     }
 
     private void Update()
@@ -27,24 +23,38 @@ public class AgentSetupController : MonoBehaviour
 
     void MainSetupController()
     {
-        if (MainGameStates.instance.allTargetOBJ.Count != 0 && Input.GetKeyDown(KeyCode.Space) && _areaHitBoxContainer == null)
+        if (MainGameStates.instance.allTargetOBJ.Count != 0 && Input.GetKeyDown(KeyCode.Space) && !_onMoveAgents)
         {
-            _areaHitBoxContainer = MainGameStates.instance.currentTargetOBJ.GetComponent<BoxCollider2D>();
+            _thePastLocation = MainGameStates.instance.allTargetOBJ[MainGameStates.instance.allTargetOBJ.Count - 1].transform.position;
+            _movingTargetOBJ = MainGameStates.instance.allTargetOBJ[MainGameStates.instance.allTargetOBJ.Count - 1];
+            _onMoveAgents = true;
         }
 
-        while (_areaHitBoxContainer != null)
+        if (_onMoveAgents)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            _movingTargetOBJ.transform.position = MouseDetection.instance.gameObject.transform.position;
+            if (Input.GetKeyDown(KeyCode.Space) && _cooldowncheck <= 0)
             {
-                if (_canPlaceAgents)
+                if (MainGameStates.instance.currentNearByBuildingCounts == 0)
                 {
-
+                    _onMoveAgents = false;
+                    _cooldowncheck = 0.2f;
                 }
                 else
                 {
-
+                    Debug.Log("HAHA Cant place");
                 }
             }
+        }
+        CooldownCheck();
+    }
+
+    private float _cooldowncheck = 0.2f;
+    void CooldownCheck()
+    {
+        if (_cooldowncheck > 0 && _onMoveAgents)
+        {
+            _cooldowncheck -= Time.deltaTime;
         }
     }
 }

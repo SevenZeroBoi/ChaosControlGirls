@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class MouseDetection : MonoBehaviour
 {
+    public static MouseDetection instance;
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Update()
     {
         CursorFollowingMouse();
@@ -28,16 +34,16 @@ public class MouseDetection : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "CHAMPION")
+        if (other.gameObject.tag == "BUILDING")
         {
-            MainGameStates.instance.allTargetOBJ.Add(other.gameObject);
+            MainGameStates.instance.allTargetOBJ.Add(other.gameObject.transform.parent.gameObject);
         }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag == "CHAMPION")
+        if (other.gameObject.tag == "BUILDING")
         {
-            MainGameStates.instance.allTargetOBJ.Remove(other.gameObject);
+            MainGameStates.instance.allTargetOBJ.Remove(other.gameObject.transform.parent.gameObject);
         }
     }
 }

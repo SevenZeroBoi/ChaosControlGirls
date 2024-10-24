@@ -17,10 +17,11 @@ public class MainGameStates : MonoBehaviour
     public GameObject currentTargetOBJ;
     public List<GameObject> allTargetOBJ;
 
+    [Header("Um")]
+    public int currentNearByBuildingCounts;
+
     [Header("Other Controller Storage")]
     public GameObject agentSetupController;
-
-
 
     private void Update()
     {
