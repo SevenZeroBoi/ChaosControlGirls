@@ -11,7 +11,7 @@ public class SO_Agents : ScriptableObject
     public string agentName;
     public string agentDescription;
     public ENUM_AgentsTag.AgentsType agentType;
-    public Sprite agentSmolIcon;
+    public Sprite agentSpriteIcon;
 
-    public TextAsset[] randomTextPopup;
+    public TextAsset[] agentsRandomTextPopup;
 }

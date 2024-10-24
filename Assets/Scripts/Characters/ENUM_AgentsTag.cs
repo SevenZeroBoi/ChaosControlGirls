@@ -25,4 +25,23 @@ public class ENUM_AgentsTag : MonoBehaviour
          * Outlander/Navigator/Sentinel are other roles
          */
     }
+
+
+    //EXTRAIDEAS - We may not need this
+    private enum AgentsAttackType
+    {
+        NONE, PHYSIC, FLAME, FROZEN, HURRICANE, CRYSTAL, STARLIGHT, SHOCK, NEON, BLAST
+        /*
+         * Aillments that enemies can take if they weaken to and got armor break
+         * Physic - Multiply damage that coming
+         * Flame - Take a damage and Make enemies create path of fire in the way that they came
+         * Frozen - Make enemies dont move for a while
+         * Hurricane - push enemies away with others nearby too
+         * Crystal - Make enemies freeze and block the path of enemies
+         * Starlight - turn into star that come to our skill charge gauge
+         * Shock - Make enemies stunned and have a chance to do extra critical damage
+         * Glitch - 
+         * Blast - if break bomb aoe damage to the nearby enemies and itself
+         */
+    }
 }
