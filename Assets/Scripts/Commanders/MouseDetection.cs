@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class MouseDetection : MonoBehaviour
 {
-    [Header("Calling for OBJ")]
-    public GameObject cursorHitboxOBJ;
-
     private void Update()
     {
         CursorFollowingMouse();
@@ -17,16 +14,15 @@ public class MouseDetection : MonoBehaviour
         Vector3 mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         mousePosition.z = 0f;
-        cursorHitboxOBJ.transform.position = mousePosition;
+        transform.position = mousePosition;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        if (MainGameStates.instance.currentTargetOBJ.Count != 0)
+        if (MainGameStates.instance != null && MainGameStates.instance.allTargetOBJ.Count != 0)
         {
-            Gizmos.DrawLine(gameObject.transform.position, MainGameStates.instance.currentTargetOBJ
-                [MainGameStates.instance.currentTargetOBJ.Count-1].transform.position);
+            Gizmos.DrawLine(gameObject.transform.position, MainGameStates.instance.currentTargetOBJ.transform.position);
         }
     }
 
@@ -34,14 +30,14 @@ public class MouseDetection : MonoBehaviour
     {
         if (other.gameObject.tag == "CHAMPION")
         {
-            MainGameStates.instance.currentTargetOBJ.Add(other.gameObject);
+            MainGameStates.instance.allTargetOBJ.Add(other.gameObject);
         }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.tag == "CHAMPION")
         {
-            MainGameStates.instance.currentTargetOBJ.Remove(other.gameObject);
+            MainGameStates.instance.allTargetOBJ.Remove(other.gameObject);
         }
     }
 }

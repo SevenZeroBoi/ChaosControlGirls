@@ -10,10 +10,25 @@ public class MainGameStates : MonoBehaviour
         instance = this;
     }
 
+    [Header("Current Game States")]
+    public CommanderState currentCommanderState;
 
     [Header("Agent Targets")]
-    public List<GameObject> currentTargetOBJ;
-    
+    public GameObject currentTargetOBJ;
+    public List<GameObject> allTargetOBJ;
+
+    [Header("Other Controller Storage")]
+    public GameObject agentSetupController;
+
+
+
+    private void Update()
+    {
+        //Object Detection
+        if (allTargetOBJ.Count != 0) currentTargetOBJ = allTargetOBJ[allTargetOBJ.Count-1];
+        else currentTargetOBJ = null;
+
+    }
 
 
     public enum CommanderState
