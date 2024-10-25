@@ -29,11 +29,39 @@ public class MainGameStates : MonoBehaviour
         if (allTargetOBJ.Count != 0) currentTargetOBJ = allTargetOBJ[allTargetOBJ.Count-1];
         else currentTargetOBJ = null;
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ChangingStates();
+        }
+        
+        if (currentCommanderState != CommanderState.SETUP)
+        {
+            agentSetupController.SetActive(false);
+        }
+        else
+        {
+            agentSetupController.SetActive(true);
+        }
     }
 
+    void ChangingStates()
+    {
+        switch (currentCommanderState)
+        {
+            case CommanderState.SETUP:
+                currentCommanderState = CommanderState.FIGHTING;
+                break;
+            case CommanderState.FIGHTING:
+                currentCommanderState = CommanderState.SETUP;
+                break;
+            default:
+                break;
+        }
+    }
 
     public enum CommanderState
     {
         FIGHTING, SETUP
     }
+
 }

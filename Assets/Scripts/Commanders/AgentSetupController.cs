@@ -7,13 +7,21 @@ public class AgentSetupController : MonoBehaviour
     private GameObject _movingTargetOBJ;
     private Vector3 _thePastLocation;
     private bool _onMoveAgents;
+    private float _cooldowncheck = 0.2f;
+
     private void OnEnable()
     {
         _thePastLocation = Vector3.zero;
+        _cooldowncheck = 0.2f;
+        _onMoveAgents = false;
+        _movingTargetOBJ = null;
     }
     private void OnDisable()
     {
-
+        if (_movingTargetOBJ != null)
+        {
+            _movingTargetOBJ.transform.position = _thePastLocation;
+        }
     }
 
     private void Update()
@@ -39,6 +47,7 @@ public class AgentSetupController : MonoBehaviour
                 {
                     _onMoveAgents = false;
                     _cooldowncheck = 0.2f;
+                    _movingTargetOBJ=null;
                 }
                 else
                 {
@@ -49,7 +58,6 @@ public class AgentSetupController : MonoBehaviour
         CooldownCheck();
     }
 
-    private float _cooldowncheck = 0.2f;
     void CooldownCheck()
     {
         if (_cooldowncheck > 0 && _onMoveAgents)
