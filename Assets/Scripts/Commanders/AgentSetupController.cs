@@ -43,7 +43,7 @@ public class AgentSetupController : MonoBehaviour
             _movingTargetOBJ.transform.position = MouseDetection.instance.gameObject.transform.position;
             if (Input.GetKeyDown(KeyCode.Space) && _cooldowncheck <= 0)
             {
-                if (MainGameStates.instance.currentNearByBuildingCounts == 0)
+                if (MainGameStates.instance.currentNearByBuildingCounts == 0 && MainGameStates.instance.currentWallAreaAroundCursor == 0)
                 {
                     _onMoveAgents = false;
                     _cooldowncheck = 0.2f;

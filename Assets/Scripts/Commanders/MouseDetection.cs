@@ -8,11 +8,20 @@ public class MouseDetection : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        Cursor.visible = false;
     }
 
     private void Update()
     {
         CursorFollowingMouse();
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     void CursorFollowingMouse()
@@ -38,12 +47,22 @@ public class MouseDetection : MonoBehaviour
         {
             MainGameStates.instance.allTargetOBJ.Add(other.gameObject.transform.parent.gameObject);
         }
+
+        if (other.gameObject.tag == "WALL")
+        {
+            MainGameStates.instance.currentWallAreaAroundCursor++;
+        }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.tag == "BUILDING")
         {
             MainGameStates.instance.allTargetOBJ.Remove(other.gameObject.transform.parent.gameObject);
+        }
+
+        if (other.gameObject.tag == "WALL")
+        {
+            MainGameStates.instance.currentWallAreaAroundCursor--;
         }
     }
 }

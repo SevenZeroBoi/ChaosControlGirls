@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class MainGameStates : MonoBehaviour
 {
-    public static MainGameStates instance; 
-    private void Awake()
-    {
-        instance = this;
-    }
+    public static MainGameStates instance;
 
     [Header("Current Game States")]
     public CommanderState currentCommanderState;
@@ -19,9 +15,16 @@ public class MainGameStates : MonoBehaviour
 
     [Header("Um")]
     public int currentNearByBuildingCounts;
+    public int currentWallAreaAroundCursor;
 
     [Header("Other Controller Storage")]
     public GameObject agentSetupController;
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Update()
     {
@@ -44,6 +47,9 @@ public class MainGameStates : MonoBehaviour
         }
     }
 
+
+
+    #region Commanding State
     void ChangingStates()
     {
         switch (currentCommanderState)
@@ -63,5 +69,6 @@ public class MainGameStates : MonoBehaviour
     {
         FIGHTING, SETUP
     }
+    #endregion
 
 }
