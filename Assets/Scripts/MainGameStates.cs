@@ -1,24 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MainGameStates : MonoBehaviour
 {
     public static MainGameStates instance;
 
-    [Header("Current Game States")]
+    [Header("Current Commander States")]
     public CommanderState currentCommanderState;
 
     [Header("Agent Targets")]
     public GameObject currentTargetOBJ;
     public List<GameObject> allTargetOBJ;
 
-    [Header("Um")]
+    [Header("Checking Collision Overall")]
     public short currentNearByBuildingCounts;
     public short currentWallAreaAroundCursor;
 
     [Header("Other Controller Storage")]
     public GameObject agentSetupController;
+
+    [Header("Game Stats List")]
+    public int currentWave;
+    public int playerCoins;
+    public int playerMaterials;
 
 
     private void Awake()
@@ -28,15 +34,22 @@ public class MainGameStates : MonoBehaviour
 
     private void Update()
     {
+        ObjectDetection();
+    }
+
+
+    void ObjectDetection()
+    {
         //Object Detection
-        if (allTargetOBJ.Count != 0) currentTargetOBJ = allTargetOBJ[allTargetOBJ.Count-1];
+        if (allTargetOBJ.Count != 0) currentTargetOBJ = allTargetOBJ[allTargetOBJ.Count - 1];
         else currentTargetOBJ = null;
 
         if (Input.GetKeyDown(KeyCode.R))
         {
             ChangingStates();
         }
-        
+
+        //state changing temp
         if (currentCommanderState != CommanderState.SETUP)
         {
             agentSetupController.SetActive(false);
@@ -48,8 +61,7 @@ public class MainGameStates : MonoBehaviour
     }
 
 
-
-    #region Commanding State
+    #region Commander State
     void ChangingStates()
     {
         switch (currentCommanderState)
