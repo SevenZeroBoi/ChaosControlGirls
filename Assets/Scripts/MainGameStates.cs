@@ -14,8 +14,8 @@ public class MainGameStates : MonoBehaviour
     public List<GameObject> allTargetOBJ;
 
     [Header("Um")]
-    public int currentNearByBuildingCounts;
-    public int currentWallAreaAroundCursor;
+    public short currentNearByBuildingCounts;
+    public short currentWallAreaAroundCursor;
 
     [Header("Other Controller Storage")]
     public GameObject agentSetupController;
