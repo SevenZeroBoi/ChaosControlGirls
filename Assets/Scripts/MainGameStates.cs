@@ -26,6 +26,9 @@ public class MainGameStates : MonoBehaviour
     public int playerCoins;
     public int playerMaterials;
 
+    [Header("Character Check")]
+    public List<SO_Agents> allCharacterInStage;
+
 
     private void Awake()
     {

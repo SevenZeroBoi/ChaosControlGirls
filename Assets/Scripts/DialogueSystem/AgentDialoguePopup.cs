@@ -6,7 +6,6 @@ using UnityEngine;
 public class AgentDialoguePopup : MonoBehaviour
 {
 
-    public List<SO_Agents> allCharacterInStage;
 
     public TMP_Text dialoguePopupText;
     public GameObject dialoguePopupBackground;
@@ -14,7 +13,7 @@ public class AgentDialoguePopup : MonoBehaviour
 
     public TextAsset RandomTextPopup()
     {
-        SO_Agents pickingAgentOnStage = allCharacterInStage[Random.Range(0, allCharacterInStage.Count)];
+        SO_Agents pickingAgentOnStage = MainGameStates.instance.allCharacterInStage[Random.Range(0, MainGameStates.instance.allCharacterInStage.Count)];
         TextAsset pickingDialogue = pickingAgentOnStage.agentsRandomTextPopup[Random.Range(0, pickingAgentOnStage.agentsRandomTextPopup.Length)];
         return pickingDialogue;
     }
