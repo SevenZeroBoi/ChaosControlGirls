@@ -12,10 +12,6 @@ public class DialogueManager : MonoBehaviour
         dialogueText.text = "";
     }
 
-    public bool canStartDialogue = false;
-
-    public TextAsset textJSON;
-
     public bool isDialoguePlaying { get; private set; }
 
     public GameObject dialoguePanel;
